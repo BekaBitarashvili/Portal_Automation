@@ -40,7 +40,6 @@ class TestCei(unittest.TestCase):
         element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.DELETE)
 
-    # ფიზიკურ პირების გადამოწმება კრედიტ-ინფოში
     def test_01_auth(self):
         self.driver.get("http://portal-auth.dev.crystal.ge:3001/")
         time.sleep(3)
@@ -90,3 +89,45 @@ class TestCei(unittest.TestCase):
         time.sleep(5)
         client_container = self.driver.find_element(By.CSS_SELECTOR, "#root > div > div.container-fluid.client-cards-div > div > div")
         assert client_container.is_displayed()
+        client_list = self.driver.find_element(By.CSS_SELECTOR, "#root > div > div.container-fluid.client-cards-div > div > div > div > div > div > div.card-body > table > tbody > tr")
+        client_list.click()
+        time.sleep(5)
+
+    def test_05_inside_information(self):
+        for _ in range(8):
+            bodytag = self.driver.find_element(By.TAG_NAME, "body")
+            bodytag.send_keys(Keys.DOWN)
+        time.sleep(2)
+        current_loan_tab = self.driver.find_element(By.ID, "current-loans-tab")
+        current_loan_tab.click()
+        time.sleep(2)
+        closed_loan_tab = self.driver.find_element(By.ID, "closed-loans-tab")
+        closed_loan_tab.click()
+        time.sleep(2)
+        problem_loan_tab = self.driver.find_element(By.ID, "problem-loans-tab")
+        problem_loan_tab.click()
+        time.sleep(2)
+        administrative_offense_tab = self.driver.find_element(By.ID, "administrative-offense-tab")
+        administrative_offense_tab.click()
+        time.sleep(2)
+        debtors_register_tab = self.driver.find_element(By.ID, "debtors-register-tab")
+        debtors_register_tab.click()
+        time.sleep(2)
+        for _ in range(8):
+            bodytag = self.driver.find_element(By.TAG_NAME, "body")
+            bodytag.send_keys(Keys.UP)
+        time.sleep(2)
+
+    def test_06_change_clicks(self):
+        select_date = self.driver.find_element(By.ID, "selectDate")
+        select_date.click()
+        time.sleep(2)
+        for _ in range(7):
+            select_date.send_keys(Keys.DOWN)
+        time.sleep(2)
+        select_date.send_keys(Keys.ENTER)
+        time.sleep(2)
+        search_button = self.driver.find_element(By.CSS_SELECTOR,
+                                                 "#root > div > div.container-fluid.search-div > div > div.col-lg-1.col-md-4.col-sm-12.col-xs-12.no-padding > div > button")
+        search_button.click()
+        time.sleep(3)
